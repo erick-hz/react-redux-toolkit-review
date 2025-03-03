@@ -1,95 +1,52 @@
+"use client";
+import React, { useEffect } from "react";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPokemonList } from "./redux/Slices/pokemonSlice";
 import styles from "./page.module.css";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const { list, loading, error } = useSelector((state) => state.pokemon);
+  console.log("pokemon:", list);
+  console.log("loading:", loading);
+  console.log("error:", error);
+
+  useEffect(() => {
+    dispatch(fetchPokemonList());
+  }, [dispatch]);
+
+  const getCardClass = (pokemon) => {
+    const firstType = pokemon.types[0]?.type.name;
+    return styles[firstType] || "";
+  };
+
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <h1 className={styles.appTitle}>100 Pokémon</h1>
+      {loading && <p className={styles.loadingText}>Loading...</p>}
+      {error && <p className={styles.errorText}>Error: {error}</p>}
+      <div className={styles.cards}>
+        {list.map((pokemon) => (
+          <div
+            key={pokemon.id}
+            className={`${styles.card} ${getCardClass(pokemon)}`}
           >
             <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src={pokemon.sprites.front_default}
+              alt={pokemon.name}
+              className={styles.pokemonImage}
+              width={96}
+              height={96}
             />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            <p className={styles.pokemonInfo}>Height: {pokemon.height}</p>
+            <p className={styles.pokemonInfo}>Weight: {pokemon.weight}</p>
+            <p className={styles.pokemonInfo}>
+              Types: {pokemon.types.map((type) => type.type.name).join(", ")}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -1,168 +1,166 @@
 .page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-
   display: grid;
-  grid-template-rows: 20px 1fr 20px;
+  grid-template-rows: auto 1fr auto;
   align-items: center;
   justify-items: center;
   min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
-  font-family: var(--font-geist-sans);
-}
-
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
-}
-
-.main {
-  display: flex;
-  flex-direction: column;
+  padding: 40px;
   gap: 32px;
-  grid-row-start: 2;
+  font-family: "Heebo", sans-serif;
+  position: relative;
+  background: linear-gradient(135deg, #1e1e1e, #2b2b2b);
 }
 
-.main ol {
-  font-family: var(--font-geist-mono);
-  padding-left: 0;
-  margin: 0;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -0.01em;
-  list-style-position: inside;
+.appTitle {
+  text-align: center;
+  padding: 20px;
+  color: #ffff;
 }
 
-.main li:not(:last-of-type) {
-  margin-bottom: 8px;
-}
-
-.main code {
-  font-family: inherit;
-  background: var(--gray-alpha-100);
-  padding: 2px 4px;
-  border-radius: 4px;
-  font-weight: 600;
-}
-
-.ctas {
+.cards {
   display: flex;
-  gap: 16px;
-}
-
-.ctas a {
-  appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 20px;
-  border: none;
-  border: 1px solid transparent;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    border-color 0.2s;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 500;
+  gap: 32px;
 }
 
-a.primary {
-  background: var(--foreground);
-  color: var(--background);
-  gap: 8px;
+.card {
+  width: 300px;
+  height: 420px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(145deg, var(--color1), var(--color2));
+  border: 5px solid #ffd700;
+  padding: 16px;
 }
 
-a.secondary {
-  border-color: var(--gray-alpha-200);
-  min-width: 180px;
+.fire {
+  background: url("../../public/images/fire.webp") center/cover no-repeat;
 }
 
-.footer {
-  grid-row-start: 3;
-  display: flex;
-  gap: 24px;
+.water {
+  background: url("../../public/images/water.webp") center/cover no-repeat;
 }
 
-.footer a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.grass {
+  background: url("../../public/images/grass.webp") center/cover no-repeat;
 }
 
-.footer img {
-  flex-shrink: 0;
+.electric {
+  background: url("../../public/images/electric.webp") center/cover no-repeat;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
+.psychic {
+  background: url("../../public/images/psychic.webp") center/cover no-repeat;
+}
 
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+.rock {
+  background: url("../../public/images/rock.avif") center/cover no-repeat;
+}
+.ghost {
+  background: url("../../public/images/ghost.png") center/cover no-repeat;
+}
 
-  .footer a:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
+.poison {
+  background: url("../../public/images/poison.jpg") center/cover no-repeat;
+}
+
+.flying {
+  background: url("../../public/images/flying.avif") center/cover no-repeat;
+}
+
+.normal {
+  background: url("../../public/images/flying.avif") center/cover no-repeat;
+}
+
+.bug {
+  background: url("../../public/images/bug.avif") center/cover no-repeat;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent);
+  pointer-events: none;
+}
+
+.card:hover {
+  box-shadow: 0 20px 50px rgba(255, 215, 0, 0.6);
+}
+
+.pokemonName {
+  font-size: 2.2rem;
+  color: #000;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+  margin-bottom: 16px;
+}
+
+.pokemonImage {
+  width: 200px;
+  height: 200px;
+  display: block;
+  margin: 0 auto 16px;
+  transition: transform 0.3s ease;
+}
+
+.pokemonImage:hover {
+  transform: scale(1.1);
+}
+
+.pokemonInfo {
+  font-size: 1.2rem;
+  color: #000;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 12px;
+  margin: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ability {
+  font-size: 1.1rem;
+  color: #c62828;
+  font-weight: bold;
+  background: #ffebee;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.attack {
+  font-size: 1.2rem;
+  color: #000;
+  font-weight: bold;
+  padding: 8px;
+  border-top: 2px solid #ffd700;
+  margin-top: 12px;
+}
+
+.energy {
+  font-size: 1rem;
+  color: #6b6b6b;
+  font-style: italic;
 }
 
 @media (max-width: 600px) {
   .page {
-    padding: 32px;
-    padding-bottom: 80px;
+    padding: 20px;
   }
-
-  .main {
-    align-items: center;
+  .card {
+    width: 220px;
+    height: 320px;
   }
-
-  .main ol {
-    text-align: center;
-  }
-
-  .ctas {
-    flex-direction: column;
-  }
-
-  .ctas a {
-    font-size: 14px;
-    height: 40px;
-    padding: 0 16px;
-  }
-
-  a.secondary {
-    min-width: auto;
-  }
-
-  .footer {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+  .pokemonImage {
+    width: 140px;
+    height: 140px;
   }
 }
